@@ -1,0 +1,6 @@
+codigo,nombre
+Z1,Norte
+Z2,Sur
+Z3,Centro
+Z4,Occidente
+Z5,ZonaVacia

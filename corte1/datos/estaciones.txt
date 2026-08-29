@@ -1,0 +1,49 @@
+codigo,nombre,zona
+100,Plaza Norte 1,Z1
+101,Terminal Norte 2,Z1
+102,Parque Norte 3,Z1
+103,Universidad Norte 4,Z1
+104,Hospital Norte 5,Z1
+105,Mercado Norte 6,Z1
+106,Estadio Norte 7,Z1
+107,Biblioteca Norte 8,Z1
+108,Museo Norte 9,Z1
+109,Centro Comercial Norte 10,Z1
+110,Aeropuerto Norte 11,Z1
+111,Cementerio Norte 12,Z1
+112,Iglesia Norte 13,Z1
+113,Coliseo Norte 14,Z1
+114,Plaza Sur 1,Z2
+115,Terminal Sur 2,Z2
+116,Parque Sur 3,Z2
+117,Universidad Sur 4,Z2
+118,Hospital Sur 5,Z2
+119,Mercado Sur 6,Z2
+120,Estadio Sur 7,Z2
+121,Biblioteca Sur 8,Z2
+122,Museo Sur 9,Z2
+123,Centro Comercial Sur 10,Z2
+124,Aeropuerto Sur 11,Z2
+125,Cementerio Sur 12,Z2
+126,Plaza Centro 1,Z3
+127,Terminal Centro 2,Z3
+128,Parque Centro 3,Z3
+129,Universidad Centro 4,Z3
+130,Hospital Centro 5,Z3
+131,Mercado Centro 6,Z3
+132,Estadio Centro 7,Z3
+133,Biblioteca Centro 8,Z3
+134,Museo Centro 9,Z3
+135,Centro Comercial Centro 10,Z3
+136,Aeropuerto Centro 11,Z3
+137,Cementerio Centro 12,Z3
+138,Plaza Occidente 1,Z4
+139,Terminal Occidente 2,Z4
+140,Parque Occidente 3,Z4
+141,Universidad Occidente 4,Z4
+142,Hospital Occidente 5,Z4
+143,Mercado Occidente 6,Z4
+144,Estadio Occidente 7,Z4
+145,Biblioteca Occidente 8,Z4
+146,Museo Occidente 9,Z4
+147,Centro Comercial Occidente 10,Z4
