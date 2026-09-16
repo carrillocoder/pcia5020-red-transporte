@@ -16,7 +16,7 @@
 
 # Análisis de requerimientos — Red de transporte de la ciudad
 
-**Pareja NN** · Juan David Carrillo Rojas y Mar Suárez · AAAA-MM-DD
+**Pareja NN** · Juan David Carrillo Rojas y Marc Suárez · 2026-09-15
 
 ## 1. Contexto y alcance (20 %)
 

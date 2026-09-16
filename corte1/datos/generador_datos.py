@@ -3,7 +3,7 @@
  PCIA5020 - Generador de datos de prueba
 --------------------------------------------------------------------------------
  Control de cambios:
-   v1.0  2026-08-29  Juan David Carrillo Rojas y Mar Suarez  Version inicial.
+   v1.0  2026-08-29  Juan David Carrillo Rojas y Marc Suarez Molina  Version inicial.
 --------------------------------------------------------------------------------
  Genera los archivos de datos de prueba de la red de transporte, respetando
  los minimos exigidos por el documento base del proyecto:

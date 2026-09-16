@@ -5,7 +5,7 @@ Docente: Christian Pinzón
 
 **Integrantes:**
 - Juan David Carrillo Rojas
-- Mar Suárez
+- Marc Suárez Molina
 
 ## Qué es esto
 

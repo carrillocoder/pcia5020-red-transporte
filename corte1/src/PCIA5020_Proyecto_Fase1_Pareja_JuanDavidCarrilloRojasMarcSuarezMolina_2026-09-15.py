@@ -3,10 +3,10 @@
  PCIA5020 - Estructuras de Datos No Lineales
  Proyecto: Red de transporte de la ciudad - Fase 1 (Corte 1)
 --------------------------------------------------------------------------------
- Pareja NN: Juan David Carrillo Rojas y Mar Suarez
+ Pareja NN: Juan David Carrillo Rojas y Marc Suarez Molina
 --------------------------------------------------------------------------------
  Control de cambios:
-   v1.0  2026-08-29  Juan David Carrillo Rojas y Mar Suarez
+   v1.0  2026-08-29  Juan David Carrillo Rojas y Marc Suarez Molina
          Version inicial: arbol N-ario (ciudad -> zonas -> estaciones), Trie
          de autocompletado, arbol de busqueda binaria por codigo y busqueda
          secuencial de comparacion, con carga de datos y casos de borde.
