@@ -265,35 +265,20 @@ class ArbolBusquedaBinaria:
     def __init__(self):
         self.raiz = None
 
-    def insertar(self, estacion):
-        """Inserta una estacion en el arbol segun su codigo."""
-        self.raiz = self._insertar_rec(self.raiz, estacion)
-
-    def _insertar_rec(self, nodo, estacion):
-        if nodo is None:
-            return NodoBST(estacion)
-        if estacion.codigo < nodo.estacion.codigo:
-            nodo.izquierda = self._insertar_rec(nodo.izquierda, estacion)
-        elif estacion.codigo > nodo.estacion.codigo:
-            nodo.derecha = self._insertar_rec(nodo.derecha, estacion)
-        # si el codigo ya existe, no se duplica (cargar_estaciones ya filtra
-        # duplicados, pero se deja la guarda por si se insertan datos a mano)
-        return nodo
-
     def construir_balanceado(self, estaciones):
         """Construye el arbol desde cero a partir de una lista de estaciones,
         quedando BALANCEADO (no solo binario).
 
         OJO, esta es la parte que de verdad importa para el criterio de
-        aceptacion: si simplemente se insertan las estaciones una por una
-        con insertar() y ya vienen ordenadas por codigo (que es como las
-        genera el generador de datos), el arbol degenera en una fila -- cada
-        nodo con un solo hijo -- y la busqueda queda igual de lenta que
-        recorrer la lista completa. Por eso aqui se ordena primero por
-        codigo y se inserta siempre el elemento DEL MEDIO primero: asi cada
-        mitad queda del mismo tamano en cada nivel y el arbol quiere altura
-        logaritmica, que es lo que hace que la comparacion contra la
-        busqueda secuencial tenga sentido.
+        aceptacion: si se insertaran las estaciones una por una, ya
+        ordenadas por codigo (que es como las genera el generador de
+        datos), el arbol degeneraria en una fila -- cada nodo con un solo
+        hijo -- y la busqueda quedaria igual de lenta que recorrer la lista
+        completa. Por eso aqui se ordena primero por codigo y se inserta
+        siempre el elemento DEL MEDIO primero: asi cada mitad queda del
+        mismo tamano en cada nivel y el arbol queda con altura logaritmica,
+        que es lo que hace que la comparacion contra la busqueda secuencial
+        tenga sentido.
         """
         ordenadas = sorted(estaciones, key=lambda e: e.codigo)
         self.raiz = self._construir_balanceado_rec(ordenadas)
@@ -351,8 +336,9 @@ def imprimir_encabezado(texto):
 
 def main():
     """Punto de entrada: carga los datos, construye las tres estructuras
-    obligatorias de la Fase 1 y corre la demo de los criterios de
-    aceptacion, incluyendo los tres casos de borde.
+    obligatorias de la Fase 1 y verifica, uno por uno, los criterios de
+    aceptacion de RF-01 a RF-04 tal como quedaron definidos en la seccion 6
+    del analisis de requerimientos.
     """
     carpeta_datos = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                   "..", "datos")
@@ -367,72 +353,52 @@ def main():
               "Corran primero 'python3 datos/generador_datos.py'.")
         return
 
-    # --- Arbol N-ario -------------------------------------------------------
-    imprimir_encabezado("1) Jerarquia ciudad -> zonas -> estaciones")
+    # --- RF-01: jerarquia ciudad -> zonas -> estaciones ----------------------
+    imprimir_encabezado("RF-01: jerarquia ciudad -> zonas -> estaciones")
     raiz = construir_jerarquia("Ciudad", zonas, estaciones)
     recorrer_jerarquia(raiz)
 
-    imprimir_encabezado("Criterio de aceptacion: listar estaciones de una zona")
-    zona_de_prueba = zonas[0]["codigo"]
-    resultado = listar_zona(raiz, zona_de_prueba)
-    print(f"Zona '{zona_de_prueba}': {len(resultado)} estaciones")
+    resultado = listar_zona(raiz, "Z1")
+    print(f"\nlistar_zona('Z1'): {len(resultado)} estaciones (se esperan 14)")
     for est in resultado:
         print(f"   {est}")
 
-    print("\n[CASO DE BORDE] Listar una zona sin estaciones (ZonaVacia):")
-    zona_vacia = zonas[-1]["codigo"]
-    resultado_vacio = listar_zona(raiz, zona_vacia)
-    print(f"Zona '{zona_vacia}': {len(resultado_vacio)} estaciones (se esperaba 0, sin excepcion)")
+    resultado_vacio = listar_zona(raiz, "Z5")
+    print(f"listar_zona('Z5'): {len(resultado_vacio)} estaciones "
+          f"(zona vacia, se esperan 0, sin excepcion)")
 
-    # --- Trie -----------------------------------------------------------
-    imprimir_encabezado("2) Trie de autocompletado")
+    # --- RF-02: autocompletado con Trie ---------------------------------
+    imprimir_encabezado("RF-02: autocompletado con Trie")
     trie = Trie()
     for est in estaciones:
         trie.insertar(est.nombre)
 
-    prefijo_prueba = estaciones[0].nombre[:3]
-    print(f"Autocompletar con '{prefijo_prueba}':")
-    for nombre in trie.autocompletar(prefijo_prueba):
+    resultado_pla = trie.autocompletar("Pla")
+    print(f"autocompletar('Pla'): {len(resultado_pla)} nombres (se esperan 4)")
+    for nombre in resultado_pla:
         print(f"   {nombre}")
 
-    print("\n[CASO DE BORDE] Autocompletar con cadena vacia:")
     resultado_vacio = trie.autocompletar("")
-    print(f"Resultado: {resultado_vacio} (se esperaba lista vacia, sin excepcion)")
+    print(f"autocompletar(''): {resultado_vacio} (se espera lista vacia, sin excepcion)")
 
-    print("\nAutocompletar con un prefijo que no existe ('ZZZ'):")
-    print(f"Resultado: {trie.autocompletar('ZZZ')} (se esperaba lista vacia)")
-
-    # --- Arbol de busqueda binaria vs. busqueda secuencial -------------------
-    imprimir_encabezado("3) y 4) Arbol de busqueda binaria vs. busqueda secuencial")
+    # --- RF-03 y RF-04: arbol de busqueda binaria vs. busqueda secuencial ----
+    imprimir_encabezado("RF-03 y RF-04: arbol de busqueda binaria vs. busqueda secuencial")
     arbol_busqueda = ArbolBusquedaBinaria()
     arbol_busqueda.construir_balanceado(estaciones)
 
-    codigo_existente = estaciones[len(estaciones) // 2].codigo
-    est_arbol, comp_arbol = arbol_busqueda.buscar(codigo_existente)
-    est_lista, comp_lista = busqueda_secuencial(estaciones, codigo_existente)
+    est_arbol, comp_arbol = arbol_busqueda.buscar(124)
+    est_lista, comp_lista = busqueda_secuencial(estaciones, 124)
+    print(f"buscar_arbol(124):        {est_arbol}  -> {comp_arbol} comparaciones (se espera 1)")
+    print(f"busqueda_secuencial(124): {est_lista}  -> {comp_lista} comparaciones (se esperan 25)")
+    print(f"Diferencia: {comp_lista - comp_arbol} comparaciones (se esperan 24)")
 
-    print(f"Buscar codigo {codigo_existente}:")
-    print(f"   Arbol de busqueda:   {est_arbol}  -> {comp_arbol} comparaciones")
-    print(f"   Busqueda secuencial: {est_lista}  -> {comp_lista} comparaciones")
-    print(f"   Diferencia (secuencial - arbol): {comp_lista - comp_arbol} comparaciones")
+    maximo = max(arbol_busqueda.buscar(est.codigo)[1] for est in estaciones)
+    print(f"\nMaximo de comparaciones del arbol sobre las {len(estaciones)} estaciones: "
+          f"{maximo} (el limite prometido es techo(log2 {len(estaciones)}) = 6)")
 
-    print("\n[CASO DE BORDE] Buscar un codigo que no existe (999999):")
     est_no, comp_no_arbol = arbol_busqueda.buscar(999999)
-    _, comp_no_lista = busqueda_secuencial(estaciones, 999999)
-    print(f"   Arbol de busqueda:   {est_no}  -> {comp_no_arbol} comparaciones (sin excepcion)")
-    print(f"   Busqueda secuencial: {est_no}  -> {comp_no_lista} comparaciones (sin excepcion)")
-
-    # --- Tabla de comparacion sobre varios codigos ---------------------------
-    imprimir_encabezado("Tabla de comparacion (para pruebas/tabla_comparacion.md)")
-    print(f"{'codigo':>8} | {'comp. arbol':>12} | {'comp. secuencial':>17} | {'diferencia':>10}")
-    print("-" * 60)
-    codigos_muestra = [estaciones[i].codigo for i in range(0, len(estaciones), max(1, len(estaciones) // 6))]
-    for codigo in codigos_muestra:
-        _, c_arbol = arbol_busqueda.buscar(codigo)
-        _, c_lista = busqueda_secuencial(estaciones, codigo)
-        print(f"{codigo:>8} | {c_arbol:>12} | {c_lista:>17} | {c_lista - c_arbol:>10}")
-
-    print("\nListo. Copien los numeros que les interesen a corte1/pruebas/tabla_comparacion.md")
+    print(f"\nbuscar_arbol(999999) (codigo inexistente): {est_no} "
+          f"-> {comp_no_arbol} comparaciones, sin excepcion")
 
 
 if __name__ == "__main__":
