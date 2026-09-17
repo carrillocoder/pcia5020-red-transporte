@@ -411,8 +411,5 @@ def main():
         _, c_lista = busqueda_secuencial(estaciones, codigo)
         print(f"{codigo:>8} | {c_arbol:>12} | {c_lista:>17} | {c_lista - c_arbol:>10}")
 
-    print("\nListo. Copien los numeros que les interesen a corte1/pruebas/tabla_comparacion.md")
-
-
 if __name__ == "__main__":
     main()
