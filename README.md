@@ -35,47 +35,32 @@ pcia5020-red-transporte/
 └── corte3/                ← se completa durante el Corte 3 (autómatas)
 ```
 
+## Archivo de requerimientos
+Para poder acceder al archivo markdown de los requerimientos toca ingresar a 
+
+```
+pcia5020-red-transporte/
+├── corte1/
+parcial del Corte 1
+│   ├── requerimientos/
+```
+Se puede acceder a el archivo a travez de la terminal ejecutando
+
+```bash
+cd corte1/requerimientos
+
+nano PCIA5020_Requerimientos_Pareja_JuanDavidCarrilloRojasMarcSuarezMolina_2026-09-15.md
+```
+
 ## Cómo correr el Corte 1
 
 ```bash
 cd corte1/datos
 python3 generador_datos.py        # genera zonas.txt, estaciones.txt, tramos.txt, secuencias.txt
 cd ../src
-python3 PCIA5020_Proyecto_Fase1_Pareja_NN_AAAA-MM-DD.py
+python3 PCIA5020_Proyecto_Fase1_Pareja_JuanDavidCarrilloRojasMarcSuarezMolina_2026-09-15.py
 ```
 
 El script de la Fase 1 carga los datos generados, arma la jerarquía, el Trie y el árbol de
 búsqueda, y corre una demo con los criterios de aceptación (listar zona, autocompletar,
 buscar por código, comparar comparaciones, y los tres casos de borde).
-
-## Antes de entregar — lo que falta por hacer ustedes dos
-
-Este repositorio trae una base de código que **funciona**, pero **falta lo que solo ustedes
-pueden decidir y explicar en la sustentación**:
-
-1. **Renombrar los archivos** reemplazando `Pareja_NN_AAAA-MM-DD` por el número de pareja que
-   les asigne el docente en Teams y la fecha real de entrega (en `src/`, `requerimientos/` y el
-   nombre en los encabezados de control de cambios).
-2. **Completar el análisis de requerimientos** en `corte1/requerimientos/` — está en formato
-   plantilla, con la guía de qué va en cada sección, pero el contenido (los datos que deciden
-   guardar, los criterios de aceptación con SUS números, el alcance, los actores) lo escriben
-   ustedes dos, sentados juntos, discutiendo cada sección. **No es válido entregar la plantilla
-   sin editar.**
-3. **Revisar y entender todo el código**, no solo correrlo: en la sustentación les preguntan a
-   cualquiera de los dos por cualquier parte del código y del análisis, no solo por lo que cada
-   uno escribió.
-4. **Ajustar los datos de prueba si quieren** (el generador ya cumple los mínimos, pero pueden
-   cambiar cuántas zonas/estaciones/tramos generar, siempre respetando los mínimos del
-   documento base: 3 zonas, 40 estaciones, una zona con 10 o más, 60 tramos, 20 secuencias con
-   al menos 5 inválidas).
-5. **Llenar la tabla de comparación** en `corte1/pruebas/tabla_comparacion.md` con los números
-   reales que arroje su ejecución.
-6. Antes de subir la versión final, pasar el checklist de
-   `corte1/requerimientos/checklist_antes_de_entregar.md`.
-
-## Flujo de trabajo sugerido con git
-
-- Trabajen sobre una rama por persona o por tarea (`feature/analisis`, `feature/trie`, etc.) y
-  únanla a `main` con un Pull Request que el otro revise — así los dos leen todo antes de
-  entregarlo, que es justamente lo que pide el docente.
-- Hagan commits pequeños y descriptivos a medida que avanzan en cada taller semanal.
