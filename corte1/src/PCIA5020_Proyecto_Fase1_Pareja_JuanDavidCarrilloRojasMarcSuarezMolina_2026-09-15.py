@@ -336,9 +336,9 @@ def imprimir_encabezado(texto):
 
 def main():
     """Punto de entrada: carga los datos, construye las tres estructuras
-    obligatorias de la Fase 1 y verifica, uno por uno, los criterios de
-    aceptacion de RF-01 a RF-04 tal como quedaron definidos en la seccion 6
-    del analisis de requerimientos.
+    obligatorias de la Fase 1 y corre la demo de los criterios de
+    aceptacion, incluyendo los tres casos de borde y la tabla de
+    comparacion arbol vs. busqueda secuencial.
     """
     carpeta_datos = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                   "..", "datos")
@@ -381,24 +381,37 @@ def main():
     resultado_vacio = trie.autocompletar("")
     print(f"autocompletar(''): {resultado_vacio} (se espera lista vacia, sin excepcion)")
 
-    # --- RF-03 y RF-04: arbol de busqueda binaria vs. busqueda secuencial ----
-    imprimir_encabezado("RF-03 y RF-04: arbol de busqueda binaria vs. busqueda secuencial")
+    # --- Arbol de busqueda binaria vs. busqueda secuencial -------------------
+    imprimir_encabezado("3) y 4) Arbol de busqueda binaria vs. busqueda secuencial")
     arbol_busqueda = ArbolBusquedaBinaria()
     arbol_busqueda.construir_balanceado(estaciones)
 
-    est_arbol, comp_arbol = arbol_busqueda.buscar(124)
-    est_lista, comp_lista = busqueda_secuencial(estaciones, 124)
-    print(f"buscar_arbol(124):        {est_arbol}  -> {comp_arbol} comparaciones (se espera 1)")
-    print(f"busqueda_secuencial(124): {est_lista}  -> {comp_lista} comparaciones (se esperan 25)")
-    print(f"Diferencia: {comp_lista - comp_arbol} comparaciones (se esperan 24)")
+    codigo_existente = estaciones[len(estaciones) // 2].codigo
+    est_arbol, comp_arbol = arbol_busqueda.buscar(codigo_existente)
+    est_lista, comp_lista = busqueda_secuencial(estaciones, codigo_existente)
 
-    maximo = max(arbol_busqueda.buscar(est.codigo)[1] for est in estaciones)
-    print(f"\nMaximo de comparaciones del arbol sobre las {len(estaciones)} estaciones: "
-          f"{maximo} (el limite prometido es techo(log2 {len(estaciones)}) = 6)")
+    print(f"Buscar codigo {codigo_existente}:")
+    print(f"   Arbol de busqueda:   {est_arbol}  -> {comp_arbol} comparaciones")
+    print(f"   Busqueda secuencial: {est_lista}  -> {comp_lista} comparaciones")
+    print(f"   Diferencia (secuencial - arbol): {comp_lista - comp_arbol} comparaciones")
 
+    print("\n[CASO DE BORDE] Buscar un codigo que no existe (999999):")
     est_no, comp_no_arbol = arbol_busqueda.buscar(999999)
-    print(f"\nbuscar_arbol(999999) (codigo inexistente): {est_no} "
-          f"-> {comp_no_arbol} comparaciones, sin excepcion")
+    _, comp_no_lista = busqueda_secuencial(estaciones, 999999)
+    print(f"   Arbol de busqueda:   {est_no}  -> {comp_no_arbol} comparaciones (sin excepcion)")
+    print(f"   Busqueda secuencial: {est_no}  -> {comp_no_lista} comparaciones (sin excepcion)")
+
+    # --- Tabla de comparacion sobre varios codigos ---------------------------
+    imprimir_encabezado("Tabla de comparacion (para pruebas/tabla_comparacion.md)")
+    print(f"{'codigo':>8} | {'comp. arbol':>12} | {'comp. secuencial':>17} | {'diferencia':>10}")
+    print("-" * 60)
+    codigos_muestra = [estaciones[i].codigo for i in range(0, len(estaciones), max(1, len(estaciones) // 6))]
+    for codigo in codigos_muestra:
+        _, c_arbol = arbol_busqueda.buscar(codigo)
+        _, c_lista = busqueda_secuencial(estaciones, codigo)
+        print(f"{codigo:>8} | {c_arbol:>12} | {c_lista:>17} | {c_lista - c_arbol:>10}")
+
+    print("\nListo. Copien los numeros que les interesen a corte1/pruebas/tabla_comparacion.md")
 
 
 if __name__ == "__main__":
